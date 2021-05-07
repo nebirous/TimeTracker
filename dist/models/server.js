@@ -41,12 +41,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var user_1 = __importDefault(require("../routes/user"));
+var time_1 = __importDefault(require("../routes/time"));
+var index_1 = __importDefault(require("../routes/index"));
 var cors_1 = __importDefault(require("cors"));
 var connection_1 = __importDefault(require("../db/connection"));
 var Server = /** @class */ (function () {
     function Server() {
         this.apiPaths = {
-            users: '/api/users'
+            users: '/users',
+            times: '/times',
         };
         this.app = express_1.default();
         this.port = process.env.PORT || '8000';
@@ -85,6 +88,8 @@ var Server = /** @class */ (function () {
     };
     Server.prototype.routes = function () {
         this.app.use(this.apiPaths.users, user_1.default);
+        this.app.use(this.apiPaths.times, time_1.default);
+        this.app.use('/index', index_1.default);
     };
     Server.prototype.listen = function () {
         var _this = this;

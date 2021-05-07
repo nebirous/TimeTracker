@@ -9,8 +9,11 @@ const Time = db.define('time', {
         type: DataTypes.TIME
     }, 
     day:{
-        type: DataTypes.STRING
+        type: DataTypes.DATE
     },
+    userId:{
+        type: DataTypes.BIGINT
+    }
 });
 
 export default Time;
