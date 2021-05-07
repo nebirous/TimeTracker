@@ -16,7 +16,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
         email!: string;
         password!: string;
         static associate(models: any){
-
+            User.belongsToMany(models.Project, {
+                through: 'ProjectAssignments'
+            })
         }
     };
     User.init({
@@ -32,15 +34,19 @@ module.exports = (sequelize: any, DataTypes: any) => {
         },
         email: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false
         }
+    }, {sequelize,
+        modelName: 'user'});
+    return User;
+};
 
-    })
-}
+
 // const User = db.define('user', {
 //     name:{
 //         type: DataTypes.STRING
@@ -56,4 +62,4 @@ module.exports = (sequelize: any, DataTypes: any) => {
 //     }
 // });
 
-export default User;
+//export default User;
