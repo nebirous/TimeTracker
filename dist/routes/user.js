@@ -3,9 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var userController_1 = require("../controllers/userController");
 var router = express_1.Router();
-router.get('/new', function (req, res) {
-    res.send('Form');
-});
+router.get('/new', userController_1.newUser);
 // API
 router.get('/api', userController_1.getUsers);
 router.get('/api/:id', userController_1.getUser);

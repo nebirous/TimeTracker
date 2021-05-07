@@ -1,12 +1,10 @@
 import { Request, Response, Router } from "express";
-import { getUsers, getUser, postUser, putUser, deleteUser } from "../controllers/userController";
+import { getUsers, getUser, postUser, putUser, deleteUser, newUser} from "../controllers/userController";
 
 
 const router = Router();
 
-router.get('/new', (req: Request, res: Response) => {
-    res.send('Form');
-})
+router.get('/new', newUser);
 
 // API
 router.get('/api', getUsers);

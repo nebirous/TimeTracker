@@ -39,157 +39,140 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.newUser = exports.deleteUser = exports.putUser = exports.postUser = exports.getUser = exports.getUsers = void 0;
-var user_1 = __importDefault(require("../models/user"));
-var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, user_1.default.findAll()];
-            case 1:
-                users = _a.sent();
-                res.json({ users: users });
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.getUsers = getUsers;
-var getUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, user;
+exports.deleteProject = exports.putProject = exports.postProject = exports.getProject = exports.getProjects = void 0;
+var time_1 = __importDefault(require("../models/time"));
+/** Gets times from a id user */
+var getProjects = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var idUser, time;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                id = req.params.id;
-                return [4 /*yield*/, user_1.default.findByPk(id)];
+                idUser = req.params.idUser;
+                return [4 /*yield*/, time_1.default.findByPk(idUser)];
             case 1:
-                user = _a.sent();
-                if (user) {
-                    res.json(user);
+                time = _a.sent();
+                if (time) {
+                    res.json(time);
                 }
                 else {
                     res.status(404).json({
-                        msg: "Not Found user with id " + id
+                        msg: "Not Found user with id " + idUser
                     });
                 }
                 return [2 /*return*/];
         }
     });
 }); };
-exports.getUser = getUser;
-var postUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var body, existeMail, user, error_1;
+exports.getProjects = getProjects;
+/** Gets times from a id user */
+var getProject = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var idUser, time;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                idUser = req.params.idUser;
+                return [4 /*yield*/, time_1.default.findByPk(idUser)];
+            case 1:
+                time = _a.sent();
+                if (time) {
+                    res.json(time);
+                }
+                else {
+                    res.status(404).json({
+                        msg: "Not Found user with id " + idUser
+                    });
+                }
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getProject = getProject;
+var postProject = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var body, time, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                body = req.body;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                time = time_1.default.build(body);
+                return [4 /*yield*/, time.save()];
+            case 2:
+                _a.sent();
+                res.json(time);
+                return [3 /*break*/, 4];
+            case 3:
+                error_1 = _a.sent();
+                res.status(500).json({
+                    msg: 'Error. Talk to administrator',
+                    body: body
+                });
+                return [3 /*break*/, 4];
+            case 4:
+                ;
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.postProject = postProject;
+var putProject = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, body, time, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = req.params.id;
                 body = req.body;
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 4, , 5]);
-                return [4 /*yield*/, user_1.default.findOne({
-                        where: {
-                            email: body.email
-                        }
-                    })];
+                return [4 /*yield*/, time_1.default.findByPk(id)];
             case 2:
-                existeMail = _a.sent();
-                if (existeMail) {
-                    return [2 /*return*/, res.status(400).json({
-                            msg: 'User already exists with email' + body.email
-                        })];
-                }
-                user = user_1.default.build(body);
-                return [4 /*yield*/, user.save()];
-            case 3:
-                _a.sent();
-                res.json(user);
-                return [3 /*break*/, 5];
-            case 4:
-                error_1 = _a.sent();
-                res.status(500).json({
-                    msg: 'Error. Talk to administrator'
-                });
-                return [3 /*break*/, 5];
-            case 5:
-                ;
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.postUser = postUser;
-var putUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, body, user, existeMail, error_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                id = req.params.id;
-                body = req.body;
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 7, , 8]);
-                return [4 /*yield*/, user_1.default.findByPk(id)];
-            case 2:
-                user = _a.sent();
-                if (!user) {
+                time = _a.sent();
+                if (!time) {
                     return [2 /*return*/, res.status(404).json({
                             msg: 'There is no user with id ' + id
                         })];
                 }
-                return [4 /*yield*/, user_1.default.findOne({
-                        where: {
-                            email: body.email
-                        }
-                    })];
+                return [4 /*yield*/, time.update(body)];
             case 3:
-                existeMail = _a.sent();
-                if (!existeMail) return [3 /*break*/, 4];
-                return [2 /*return*/, res.status(400).json({
-                        msg: 'User already exists with email' + body.email
-                    })];
-            case 4: return [4 /*yield*/, user.update(body)];
-            case 5:
                 _a.sent();
-                _a.label = 6;
-            case 6:
-                res.json(user);
-                return [3 /*break*/, 8];
-            case 7:
+                res.json(time);
+                return [3 /*break*/, 5];
+            case 4:
                 error_2 = _a.sent();
                 res.status(500).json({
                     msg: 'Error. Talk to administrator'
                 });
-                return [3 /*break*/, 8];
-            case 8:
+                return [3 /*break*/, 5];
+            case 5:
                 ;
                 return [2 /*return*/];
         }
     });
 }); };
-exports.putUser = putUser;
-var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, user;
+exports.putProject = putProject;
+var deleteProject = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, time;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 id = req.params.id;
-                return [4 /*yield*/, user_1.default.findByPk(id)];
+                return [4 /*yield*/, time_1.default.findByPk(id)];
             case 1:
-                user = _a.sent();
-                if (!user) {
+                time = _a.sent();
+                if (!time) {
                     return [2 /*return*/, res.status(404).json({
-                            msg: 'User not found with id' + id
+                            msg: 'Time not found with id' + id
                         })];
                 }
-                return [4 /*yield*/, user.update({ status: false })];
+                return [4 /*yield*/, time.update({ status: false })];
             case 2:
                 _a.sent();
-                res.json(user);
+                res.json(time);
                 return [2 /*return*/];
         }
     });
 }); };
-exports.deleteUser = deleteUser;
-var newUser = function (req, res) {
-    res.send('Form');
-};
-exports.newUser = newUser;
-//# sourceMappingURL=userController.js.map
+exports.deleteProject = deleteProject;
+//# sourceMappingURL=pojectController.js.map

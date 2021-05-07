@@ -43,6 +43,7 @@ var express_1 = __importDefault(require("express"));
 var user_1 = __importDefault(require("../routes/user"));
 var time_1 = __importDefault(require("../routes/time"));
 var index_1 = __importDefault(require("../routes/index"));
+var project_1 = __importDefault(require("../routes/project"));
 var express_handlebars_1 = __importDefault(require("express-handlebars"));
 var cors_1 = __importDefault(require("cors"));
 var path_1 = __importDefault(require("path"));
@@ -52,6 +53,7 @@ var Server = /** @class */ (function () {
         this.apiPaths = {
             users: '/users',
             times: '/times',
+            projects: '/projects'
         };
         this.app = express_1.default();
         this.port = process.env.PORT || '8000';
@@ -99,6 +101,7 @@ var Server = /** @class */ (function () {
     Server.prototype.routes = function () {
         this.app.use(this.apiPaths.users, user_1.default);
         this.app.use(this.apiPaths.times, time_1.default);
+        this.app.use(this.apiPaths.projects, project_1.default);
         this.app.use('/index', index_1.default);
     };
     Server.prototype.listen = function () {

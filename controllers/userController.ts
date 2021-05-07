@@ -115,3 +115,9 @@ export const deleteUser = async(req: Request, res: Response) => {
     res.json(user)
 
 }
+
+export const newUser = (req: Request, res: Response) => {
+
+    res.send('Form');
+
+}
