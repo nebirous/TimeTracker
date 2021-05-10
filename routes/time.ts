@@ -8,6 +8,6 @@ const router = Router();
 router.get('/:idUser', getTimes);
 router.post('/', postTime);
 router.put('/:id', putTime);
-router.delete('/:id', deleteTime);
+router.delete('/:id', deleteTime); 
 
 export default router;
