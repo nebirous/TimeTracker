@@ -1,8 +1,11 @@
 import dotenv from "dotenv";
-import Server from "./models/server";
+import Server from "./config/server";
+import db from './models/intex.js';
 
 // Configuration
 dotenv.config();
 
 const server = new Server();
-server.listen(); 
+db.sequelize.sync().then(() => {
+    server.listen(); 
+})

@@ -23,6 +23,9 @@ module.exports = function (sequelize, DataTypes) {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         User.associate = function (models) {
+            User.belongsToMany(models.Project, {
+                through: 'ProjectAssignments'
+            });
         };
         return User;
     }(sequelize_1.Model));
@@ -40,13 +43,15 @@ module.exports = function (sequelize, DataTypes) {
         },
         email: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false
         }
-    });
+    }, { sequelize: sequelize, modelName: 'user' });
+    return User;
 };
 // const User = db.define('user', {
 //     name:{
@@ -62,5 +67,5 @@ module.exports = function (sequelize, DataTypes) {
 //         type: DataTypes.BOOLEAN
 //     }
 // });
-exports.default = User;
+//export default User;
 //# sourceMappingURL=user.js.map

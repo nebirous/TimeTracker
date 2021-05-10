@@ -46,6 +46,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
     return User;
 };
 
+default export 
+
 
 // const User = db.define('user', {
 //     name:{
