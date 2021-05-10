@@ -43,12 +43,12 @@ exports.deleteTime = exports.putTime = exports.postTime = exports.getTimes = voi
 var time_1 = __importDefault(require("../models/time"));
 /** Gets times from a id user */
 var getTimes = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var idUser, time;
+    var idTime, time;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                idUser = req.params.idUser;
-                return [4 /*yield*/, time_1.default.findByPk(idUser)];
+                idTime = req.params.idTime;
+                return [4 /*yield*/, time_1.default.findByPk(idTime)];
             case 1:
                 time = _a.sent();
                 if (time) {
@@ -56,7 +56,7 @@ var getTimes = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 }
                 else {
                     res.status(404).json({
-                        msg: "Not Found user with id " + idUser
+                        msg: "Not Found user with id " + idTime
                     });
                 }
                 return [2 /*return*/];

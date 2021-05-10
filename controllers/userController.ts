@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/user";
 
-
 export const getUsers = async(req: Request, res: Response) => {
 
     const users = await User.findAll();
@@ -34,7 +33,7 @@ export const postUser = async(req: Request, res: Response) => {
 
         const existeMail = await User.findOne({
             where: {
-                email: body.email
+                mail: body.mail
             }
         });
 
@@ -76,7 +75,7 @@ export const putUser = async(req: Request, res: Response) => {
 
         const existeMail = await User.findOne({
             where: {
-                email: body.email
+                mail: body.email
             }
         });
 

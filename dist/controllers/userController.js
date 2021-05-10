@@ -87,7 +87,7 @@ var postUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 _a.trys.push([1, 4, , 5]);
                 return [4 /*yield*/, user_1.default.findOne({
                         where: {
-                            email: body.email
+                            mail: body.mail
                         }
                     })];
             case 2:
@@ -136,7 +136,7 @@ var putUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 }
                 return [4 /*yield*/, user_1.default.findOne({
                         where: {
-                            email: body.email
+                            mail: body.email
                         }
                     })];
             case 3:

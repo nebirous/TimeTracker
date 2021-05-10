@@ -5,15 +5,15 @@ import Time from "../models/time";
 /** Gets times from a id user */
 export const getTimes = async(req: Request, res: Response) => {
 
-    const { idUser } = req.params;
+    const { idTime } = req.params;
 
-    const time = await Time.findByPk(idUser)
+    const time = await Time.findByPk(idTime)
 
     if(time){
         res.json(time);
     } else {
         res.status(404).json({
-            msg: `Not Found user with id ${ idUser }`
+            msg: `Not Found user with id ${ idTime }`
         })
     }
 
