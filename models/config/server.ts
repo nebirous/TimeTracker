@@ -1,13 +1,13 @@
 import express from "express";
-import userRoutes from "../routes/user";
-import timesRoutes from "../routes/time";
-import indexRoutes from "../routes/index";
-import projectRoutes from "../routes/project";
+import userRoutes from "../../routes/user";
+import timesRoutes from "../../routes/time";
+import indexRoutes from "../../routes/index";
+import projectRoutes from "../../routes/project";
 import exphbs from 'express-handlebars';
 import cors from "cors";
 import path from "path";
 
-import db from "../db/connection";
+import db from "../../db/connection";
 
 class Server {
 

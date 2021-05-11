@@ -40,12 +40,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.newUser = exports.deleteUser = exports.putUser = exports.postUser = exports.getUser = exports.getUsers = void 0;
-var user_1 = __importDefault(require("../models/user"));
+var models_1 = __importDefault(require("../models"));
 var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var users;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user_1.default.findAll()];
+            case 0: return [4 /*yield*/, models_1.default.User.findAll()];
             case 1:
                 users = _a.sent();
                 res.json({ users: users });
@@ -60,7 +60,7 @@ var getUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
         switch (_a.label) {
             case 0:
                 id = req.params.id;
-                return [4 /*yield*/, user_1.default.findByPk(id)];
+                return [4 /*yield*/, models_1.default.User.findByPk(id)];
             case 1:
                 user = _a.sent();
                 if (user) {
@@ -85,7 +85,7 @@ var postUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 4, , 5]);
-                return [4 /*yield*/, user_1.default.findOne({
+                return [4 /*yield*/, models_1.default.User.findOne({
                         where: {
                             email: body.email
                         }
@@ -97,7 +97,7 @@ var postUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                             msg: 'User already exists with email' + body.email
                         })];
                 }
-                user = user_1.default.build(body);
+                user = models_1.default.User.build(body);
                 return [4 /*yield*/, user.save()];
             case 3:
                 _a.sent();
@@ -126,7 +126,7 @@ var putUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 7, , 8]);
-                return [4 /*yield*/, user_1.default.findByPk(id)];
+                return [4 /*yield*/, models_1.default.User.findByPk(id)];
             case 2:
                 user = _a.sent();
                 if (!user) {
@@ -134,7 +134,7 @@ var putUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                             msg: 'There is no user with id ' + id
                         })];
                 }
-                return [4 /*yield*/, user_1.default.findOne({
+                return [4 /*yield*/, models_1.default.User.findOne({
                         where: {
                             email: body.email
                         }
@@ -171,7 +171,7 @@ var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
         switch (_a.label) {
             case 0:
                 id = req.params.id;
-                return [4 /*yield*/, user_1.default.findByPk(id)];
+                return [4 /*yield*/, models_1.default.User.findByPk(id)];
             case 1:
                 user = _a.sent();
                 if (!user) {

@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteProject = exports.putProject = exports.postProject = exports.getProject = exports.getProjects = void 0;
-var time_1 = __importDefault(require("../models/time"));
+var models_1 = __importDefault(require("../models"));
 /** Gets times from a id user */
 var getProjects = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var idUser, time;
@@ -48,7 +48,7 @@ var getProjects = function (req, res) { return __awaiter(void 0, void 0, void 0,
         switch (_a.label) {
             case 0:
                 idUser = req.params.idUser;
-                return [4 /*yield*/, time_1.default.findByPk(idUser)];
+                return [4 /*yield*/, models_1.default.Time.findByPk(idUser)];
             case 1:
                 time = _a.sent();
                 if (time) {
@@ -71,7 +71,7 @@ var getProject = function (req, res) { return __awaiter(void 0, void 0, void 0, 
         switch (_a.label) {
             case 0:
                 idUser = req.params.idUser;
-                return [4 /*yield*/, time_1.default.findByPk(idUser)];
+                return [4 /*yield*/, models_1.default.Time.findByPk(idUser)];
             case 1:
                 time = _a.sent();
                 if (time) {
@@ -96,7 +96,7 @@ var postProject = function (req, res) { return __awaiter(void 0, void 0, void 0,
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                time = time_1.default.build(body);
+                time = models_1.default.Time.build(body);
                 return [4 /*yield*/, time.save()];
             case 2:
                 _a.sent();
@@ -126,7 +126,7 @@ var putProject = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 4, , 5]);
-                return [4 /*yield*/, time_1.default.findByPk(id)];
+                return [4 /*yield*/, models_1.default.Time.findByPk(id)];
             case 2:
                 time = _a.sent();
                 if (!time) {
@@ -158,7 +158,7 @@ var deleteProject = function (req, res) { return __awaiter(void 0, void 0, void 
         switch (_a.label) {
             case 0:
                 id = req.params.id;
-                return [4 /*yield*/, time_1.default.findByPk(id)];
+                return [4 /*yield*/, models_1.default.Time.findByPk(id)];
             case 1:
                 time = _a.sent();
                 if (!time) {

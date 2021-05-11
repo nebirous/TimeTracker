@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -23,19 +23,25 @@ module.exports = function (sequelize, DataTypes) {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         User.associate = function (models) {
+            // define association here
             User.belongsToMany(models.Project, {
-                through: 'ProjectAssignments'
+                through: 'UserAssignments'
+            });
+            User.hasMany(models.Time, {
+                foreignKey: 'userId',
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
             });
         };
         return User;
     }(sequelize_1.Model));
     ;
     User.init({
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: sequelize_1.UUIDV4,
+        userId: {
+            type: DataTypes.INTEGER,
             allowNull: false,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         },
         name: {
             type: DataTypes.STRING,
@@ -50,22 +56,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         }
-    }, { sequelize: sequelize, modelName: 'user' });
+    }, {
+        sequelize: sequelize,
+        modelName: 'User',
+    });
     return User;
 };
-// const User = db.define('user', {
-//     name:{
-//         type: DataTypes.STRING
-//     },
-//     email: {
-//         type: DataTypes.STRING
-//     }, 
-//     password:{
-//         type: DataTypes.STRING
-//     },
-//     status: {
-//         type: DataTypes.BOOLEAN
-//     }
-// });
-//export default User;
 //# sourceMappingURL=user.js.map

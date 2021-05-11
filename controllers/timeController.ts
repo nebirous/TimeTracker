@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Time from "../models/time";
+import db from "../models";
 
 
 /** Gets times from a id user */
@@ -7,7 +7,7 @@ export const getTimes = async(req: Request, res: Response) => {
 
     const { idUser } = req.params;
 
-    const time = await Time.findByPk(idUser)
+    const time = await db.Time.findByPk(idUser)
 
     if(time){
         res.json(time);
@@ -25,7 +25,7 @@ export const postTime = async(req: Request, res: Response) => {
 
     try{
         
-        const time = Time.build(body);
+        const time = db.Time.build(body);
         await time.save();
 
         res.json( time );
@@ -47,7 +47,7 @@ export const putTime = async(req: Request, res: Response) => {
 
     try{
 
-        const time = await Time.findByPk(id);
+        const time = await db.Time.findByPk(id);
 
         if(!time){
             return res.status(404).json({
@@ -72,7 +72,7 @@ export const deleteTime = async(req: Request, res: Response) => {
     const { id } = req.params;
 
     
-    const time = await Time.findByPk(id);
+    const time = await db.Time.findByPk(id);
     if(!time){
         return res.status(404).json({
             msg: 'Time not found with id' + id

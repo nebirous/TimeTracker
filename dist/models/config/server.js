@@ -40,14 +40,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var user_1 = __importDefault(require("../routes/user"));
-var time_1 = __importDefault(require("../routes/time"));
-var index_1 = __importDefault(require("../routes/index"));
-var project_1 = __importDefault(require("../routes/project"));
+var user_1 = __importDefault(require("../../routes/user"));
+var time_1 = __importDefault(require("../../routes/time"));
+var index_1 = __importDefault(require("../../routes/index"));
+var project_1 = __importDefault(require("../../routes/project"));
 var express_handlebars_1 = __importDefault(require("express-handlebars"));
 var cors_1 = __importDefault(require("cors"));
 var path_1 = __importDefault(require("path"));
-var connection_1 = __importDefault(require("../db/connection"));
+var connection_1 = __importDefault(require("../../db/connection"));
 var Server = /** @class */ (function () {
     function Server() {
         this.apiPaths = {

@@ -4,12 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var dotenv_1 = __importDefault(require("dotenv"));
-var server_1 = __importDefault(require("./config/server"));
-var index_js_1 = __importDefault(require("./models/index.js"));
+var server_1 = __importDefault(require("./models/config/server"));
+var models_1 = __importDefault(require("./models"));
 // Configuration
 dotenv_1.default.config();
 var server = new server_1.default();
-index_js_1.default.sequelize.sync().then(function () {
+models_1.default.sequelize.sync().then(function () {
     server.listen();
 });
 //# sourceMappingURL=app.js.map

@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import User from "../models/user";
+import db from "../models";
 
 
 export const getUsers = async(req: Request, res: Response) => {
 
-    const users = await User.findAll();
+    const users = await db.User.findAll();
 
     res.json({users});
 
@@ -14,7 +14,7 @@ export const getUser = async(req: Request, res: Response) => {
 
     const { id } = req.params;
 
-    const user = await User.findByPk(id)
+    const user = await db.User.findByPk(id)
 
     if(user){
         res.json(user);
@@ -32,7 +32,7 @@ export const postUser = async(req: Request, res: Response) => {
 
     try{
 
-        const existeMail = await User.findOne({
+        const existeMail = await db.User.findOne({
             where: {
                 email: body.email
             }
@@ -45,7 +45,7 @@ export const postUser = async(req: Request, res: Response) => {
         }
 
 
-        const user = User.build(body);
+        const user = db.User.build(body);
         await user.save();
 
         res.json( user );
@@ -66,7 +66,7 @@ export const putUser = async(req: Request, res: Response) => {
 
     try{
 
-        const user = await User.findByPk(id);
+        const user = await db.User.findByPk(id);
 
         if(!user){
             return res.status(404).json({
@@ -74,7 +74,7 @@ export const putUser = async(req: Request, res: Response) => {
             });
         }
 
-        const existeMail = await User.findOne({
+        const existeMail = await db.User.findOne({
             where: {
                 email: body.email
             }
@@ -103,7 +103,7 @@ export const deleteUser = async(req: Request, res: Response) => {
     const { id } = req.params;
 
     
-    const user = await User.findByPk(id);
+    const user = await db.User.findByPk(id);
     if(!user){
         return res.status(404).json({
             msg: 'User not found with id' + id

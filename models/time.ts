@@ -1,19 +1,50 @@
-import { DataTypes } from "sequelize";
-import db from "../db/connection";
+'use strict';
+import { Model } from 'sequelize';
 
-const Time = db.define('time', {
-    startTime:{
-        type: DataTypes.TIME
+interface TimeAttributes {
+    timeId: number;
+    startTime: string;
+    endTime: string;
+    day: Date;
+    // userId: number;
+    // projectId: number;
+}
+
+module.exports = (sequelize: any, DataTypes: any) => {
+  class Time extends Model<TimeAttributes> implements TimeAttributes {
+    
+    timeId!: number;
+    startTime!: string;
+    endTime!: string;
+    day!: Date;
+
+    static associate(models: any) {
+      
+    }
+  };
+  Time.init({
+    timeId: {
+        allowNull: false,
+        autoIncrement: false,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+        unique: true,
+    },
+    startTime: {
+        allowNull: false,
+        type: DataTypes.TEXT,
     },
     endTime: {
-        type: DataTypes.TIME
-    }, 
-    day:{
-        type: DataTypes.DATE
+        allowNull: false,
+        type: DataTypes.TEXT,
     },
-    userId:{
-        type: DataTypes.BIGINT
+    day: {
+        allowNull: false,
+        type: DataTypes.DATE,
     }
-});
-
-export default Time;
+  }, {
+    sequelize,
+    modelName: 'Time',
+    });
+  return Time;
+};
