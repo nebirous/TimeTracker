@@ -1,65 +1,56 @@
-import { DataTypes, Model, Optional } from "sequelize";
-import db from "../db/connection";
-import { sequelize } from '.';
-import Time from './time';
-import Project from "./project";
+'use strict';
+import { Model } from 'sequelize';
 
 interface UserAttributes {
-    id: string;
-    userName: string;
-    mail: string;
-    password: string;
-    projects: string;
-  };
-  
+  userId: number;
+  name: string;
+  email: string;
+  password: string;
+}
 
-    interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
-  
-    interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes {
-        createdAt?: Date;
-        updatedAt?: Date;
-      }
+module.exports = (sequelize: any, DataTypes: any) => {
+  class User extends Model<UserAttributes> implements UserAttributes {
     
+    userId!: number;
+    name!: string;
+    email!: string;
+    password!: string;
 
-
-    const User = sequelize.define<UserInstance>('User',
-    {
-        id: {
-            allowNull: false,
-            autoIncrement: false,
-            primaryKey: true,
-            type: DataTypes.UUID,
-            unique: true,
-        },
-        userName: {
-            allowNull: false,
-            type: DataTypes.TEXT,
-        },
-        mail: {
-            allowNull: false,
-            type: DataTypes.TEXT,
-        },
-        password: {
-            allowNull: false,
-            type: DataTypes.TEXT,
-        },
-        projects: {
-            allowNull: true,
-            type: DataTypes.UUID,
-        }
-    }
-    );
-
-    User.hasMany(Time, {
-        sourceKey: 'id',
+    static associate(models: any) {
+      // define association here
+      User.belongsToMany(models.Project, {
+        through: 'UserAssignments'
+      });
+      User.hasMany(models.Time, {
         foreignKey: 'userId',
-        as: 'times'
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       });
-
-    User.hasMany(Project, {
-        sourceKey: 'id',
-        foreignKey: 'users',
-        as: 'projects'
-      });
-
-    export default User;
+    }
+  };
+  User.init({
+    userId: { 
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  }, {
+    sequelize,
+    modelName: 'User',
+    });
+  return User;
+};

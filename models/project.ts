@@ -1,65 +1,50 @@
-import { DataTypes, Model, Optional } from "sequelize";
-import db from "../db/connection";
-import { sequelize } from '.';
-import Time from './time';
-import User from './user';
+'use strict';
+import { Model, UUIDV4 } from 'sequelize';
 
 interface ProjectAttributes {
-    id: string;
-    projectName: string;
-    projectDescription: string;
-    users: string,
-    times: string
-  };
-  
+  projectId: string;
+  title: string;
+  description: string;
+  status: string;
+}
 
-    interface ProjectCreationAttributes extends Optional<ProjectAttributes, 'id'> {}
-  
-    interface ProjectInstance extends Model<ProjectAttributes, ProjectCreationAttributes>, ProjectAttributes {
-        createdAt?: Date;
-        updatedAt?: Date;
-      }
+module.exports = (sequelize: any, DataTypes: any) => {
+  class Project extends Model<ProjectAttributes> implements ProjectAttributes {
     
+    projectId!: string;
+    title!: string;
+    description!: string ;
+    status!: string;
 
-
-    const Project = sequelize.define<ProjectInstance>('Project',
-    {
-        id: {
-            allowNull: false,
-            autoIncrement: false,
-            primaryKey: true,
-            type: DataTypes.UUID,
-            unique: true,
-        },
-        projectName: {
-            allowNull: true,
-            type: DataTypes.TEXT,
-        },
-        projectDescription: {
-            allowNull: true,
-            type: DataTypes.TEXT,
-        },
-        users: {
-            allowNull: true,
-            type: DataTypes.UUID,
-        },
-        times: {
-            allowNull: true,
-            type: DataTypes.UUID,
-        }
-    }
-    );
-
-    Project.hasMany(Time, {
-        sourceKey: 'id',
-        foreignKey: 'ProjectId',
-        as: 'times'
+    static associate (models: any) {
+      // define association here
+      const project =  Project.belongsToMany(models.User, {
+        through: 'UserAssignments'
       });
-
-    Project.hasMany(User, {
-        sourceKey: 'id',
-        foreignKey: 'Projects',
-        as: 'user'
+    }
+  };
+  Project.init({
+    projectId: { 
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  }, {
+    sequelize,
+    modelName: 'Project',
     });
-    
-    export default Project;
+  return Project;
+};

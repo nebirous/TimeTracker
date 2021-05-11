@@ -1,47 +1,60 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+'use strict';
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 var sequelize_1 = require("sequelize");
-var _1 = require(".");
-var time_1 = __importDefault(require("./time"));
-var project_1 = __importDefault(require("./project"));
-;
-var User = _1.sequelize.define('User', {
-    id: {
-        allowNull: false,
-        autoIncrement: false,
-        primaryKey: true,
-        type: sequelize_1.DataTypes.UUID,
-        unique: true,
-    },
-    userName: {
-        allowNull: false,
-        type: sequelize_1.DataTypes.TEXT,
-    },
-    mail: {
-        allowNull: false,
-        type: sequelize_1.DataTypes.TEXT,
-    },
-    password: {
-        allowNull: false,
-        type: sequelize_1.DataTypes.TEXT,
-    },
-    projects: {
-        allowNull: true,
-        type: sequelize_1.DataTypes.UUID,
-    }
-});
-User.hasMany(time_1.default, {
-    sourceKey: 'id',
-    foreignKey: 'userId',
-    as: 'times'
-});
-User.hasMany(project_1.default, {
-    sourceKey: 'id',
-    foreignKey: 'users',
-    as: 'projects'
-});
-exports.default = User;
+module.exports = function (sequelize, DataTypes) {
+    var User = /** @class */ (function (_super) {
+        __extends(User, _super);
+        function User() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        User.associate = function (models) {
+            // define association here
+            User.belongsToMany(models.Project, {
+                through: 'UserAssignment'
+            });
+        };
+        return User;
+    }(sequelize_1.Model));
+    ;
+    User.init({
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
+    }, {
+        sequelize: sequelize,
+        modelName: 'User',
+    });
+    return User;
+};
 //# sourceMappingURL=user.js.map

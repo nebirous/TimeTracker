@@ -4,65 +4,53 @@ import { sequelize } from '.';
 import User from './user';
 import Project from './project';
 
+'use strict';
+import { Model } from 'sequelize';
+
 interface TimeAttributes {
-    id: string;
+    timeId: number;
     startTime: string;
     endTime: string;
     day: Date;
-    userId: string;
-    projectId: string;
-  };
-  
+    // userId: number;
+    // projectId: number;
+}
 
-    interface TimeCreationAttributes extends Optional<TimeAttributes, 'id'> {}
-  
-    interface TimeInstance extends Model<TimeAttributes, TimeCreationAttributes>, TimeAttributes {
-        createdAt?: Date;
-        updatedAt?: Date;
-      }
+module.exports = (sequelize: any, DataTypes: any) => {
+  class Time extends Model<TimeAttributes> implements TimeAttributes {
     
+    timeId!: number;
+    startTime!: string;
+    endTime!: string;
+    day!: Date;
 
-
-    const Time = sequelize.define<TimeInstance>('Time',
-    {
-        id: {
-            allowNull: false,
-            autoIncrement: false,
-            primaryKey: true,
-            type: DataTypes.UUID,
-            unique: true,
-        },
-        startTime: {
-            allowNull: false,
-            type: DataTypes.TEXT,
-        },
-        endTime: {
-            allowNull: false,
-            type: DataTypes.TEXT,
-        },
-        day: {
-            allowNull: false,
-            type: DataTypes.DATE,
-        },
-        userId: {
-            allowNull: false,
-            type: DataTypes.UUID,
-        },
-        projectId: {
-            allowNull: false,
-            type: DataTypes.UUID,
-        },
+    static associate(models: any) {
+      
     }
-    );
-
-    Time.belongsTo(User, {
-        foreignKey: 'userId',
-        as: 'user'
+  };
+  Time.init({
+    timeId: {
+        allowNull: false,
+        autoIncrement: false,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+        unique: true,
+    },
+    startTime: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+    },
+    endTime: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+    },
+    day: {
+        allowNull: false,
+        type: DataTypes.DATE,
+    }
+  }, {
+    sequelize,
+    modelName: 'Time',
     });
-
-    Time.belongsTo(Project, {
-        foreignKey: 'projectId',
-        as: 'project'
-      });
-
-    export default Time;
+  return Time;
+};

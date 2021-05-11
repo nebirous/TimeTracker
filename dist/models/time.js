@@ -1,49 +1,60 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+'use strict';
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 var sequelize_1 = require("sequelize");
-var _1 = require(".");
-var user_1 = __importDefault(require("./user"));
-var project_1 = __importDefault(require("./project"));
-;
-var Time = _1.sequelize.define('Time', {
-    id: {
-        allowNull: false,
-        autoIncrement: false,
-        primaryKey: true,
-        type: sequelize_1.DataTypes.UUID,
-        unique: true,
-    },
-    startTime: {
-        allowNull: false,
-        type: sequelize_1.DataTypes.TEXT,
-    },
-    endTime: {
-        allowNull: false,
-        type: sequelize_1.DataTypes.TEXT,
-    },
-    day: {
-        allowNull: false,
-        type: sequelize_1.DataTypes.DATE,
-    },
-    userId: {
-        allowNull: false,
-        type: sequelize_1.DataTypes.UUID,
-    },
-    projectId: {
-        allowNull: false,
-        type: sequelize_1.DataTypes.UUID,
-    },
-});
-Time.belongsTo(user_1.default, {
-    foreignKey: 'userId',
-    as: 'user'
-});
-Time.belongsTo(project_1.default, {
-    foreignKey: 'projectId',
-    as: 'project'
-});
-exports.default = Time;
+module.exports = function (sequelize, DataTypes) {
+    var User = /** @class */ (function (_super) {
+        __extends(User, _super);
+        function User() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        User.associate = function (models) {
+            // define association here
+            User.belongsToMany(models.Project, {
+                through: 'UserAssigned'
+            });
+        };
+        return User;
+    }(sequelize_1.Model));
+    ;
+    User.init({
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
+    }, {
+        sequelize: sequelize,
+        modelName: 'User',
+    });
+    return User;
+};
 //# sourceMappingURL=time.js.map
