@@ -4,9 +4,15 @@ import db from "../models";
 
 export const getUsers = async(req: Request, res: Response) => {
 
-    const users = await db.User.findAll();
+    db.User.findAll({
+        include: {
+            model: db.Project
+        }
+    }).then((result: object) => res.json(result)).catch((err: object) => console.error(err));
 
-    res.json({users});
+    // const users = await db.User.findAll();
+
+    // res.json({users});
 
 }
 

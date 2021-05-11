@@ -3,13 +3,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var dotenv_1 = __importDefault(require("dotenv"));
-var server_1 = __importDefault(require("./models/config/server"));
-var models_1 = __importDefault(require("./models"));
+const dotenv_1 = __importDefault(require("dotenv"));
+const models_1 = __importDefault(require("./models"));
+const express_1 = __importDefault(require("express"));
+const app = express_1.default();
+const port = process.env.PORT || 8000;
 // Configuration
 dotenv_1.default.config();
-var server = new server_1.default();
-models_1.default.sequelize.sync().then(function () {
-    server.listen();
+// const server = new Server();
+// server.listen(); 
+app.get('/', (req, res) => {
+    models_1.default.User.findAll({
+        include: {
+            model: models_1.default.Project
+        }
+    }).then((result) => res.json(result)).catch((err) => console.error(err));
+});
+models_1.default.sequelize.sync().then(() => {
+    app.listen(port, () => {
+        console.log(`App listening on port ${port}`);
+    });
 });
 //# sourceMappingURL=app.js.map

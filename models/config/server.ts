@@ -7,7 +7,8 @@ import exphbs from 'express-handlebars';
 import cors from "cors";
 import path from "path";
 
-import db from "../../db/connection";
+import connection from "../../db/connection";
+import db from '../';
 
 class Server {
 
@@ -40,7 +41,7 @@ class Server {
     
     async dbConnection(){
         try{
-            await db.authenticate();
+            await connection.authenticate();
             console.log('Database online');
         }catch (error){
             throw new Error(error)
@@ -68,8 +69,10 @@ class Server {
     }
 
     listen(){
-        this.app.listen(this.port, ()=> {
-            console.log('Servidor corriendo en puerto '+ this.port);
+        db.sequelize.sync().then(() => {
+            this.app.listen(this.port, ()=> {
+                console.log('Servidor corriendo en puerto '+ this.port);
+            });
         });
     }
 
